@@ -5,7 +5,9 @@ import com.mmaziol.ante.model.ActiveGame;
 import com.mmaziol.ante.dto.GameLiveStats;
 import com.mmaziol.ante.model.Player;
 import com.mmaziol.ante.model.Ruleset;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GameService {
     private ActiveGame activeGame;
 
@@ -22,16 +24,30 @@ public class GameService {
     }
 
     public void startGame(Ruleset ruleset) {
-        if (this.activeGame == null) {
+        if (ruleset == null) {
+            throw new IllegalArgumentException("ruleset does not exist");
+        }
+
+        if (this.activeGame == null && ruleset.isReadyToStart()) {
             ActiveGame activeGame = new ActiveGame(ruleset);
             this.setActiveGame(activeGame);
-        } else {
+        } else if (this.activeGame != null) {
             throw new IllegalStateException("game is already running");
+        } else if (!ruleset.isReadyToStart()) {
+            throw new IllegalStateException("not enough players to start");
         }
     }
 
     public void finishGame() {
         this.setActiveGame(null);
+    }
+
+    public Player getPlayerByName(String name) {
+        if (this.activeGame == null) {
+            throw new IllegalStateException("game does not exist");
+        }
+
+        return this.activeGame.getPlayerByName(name);
     }
 
     public void buyInPlayer(Player player) {
@@ -83,6 +99,10 @@ public class GameService {
     }
 
     public GameOverview getGameOverview() {
-        return null;
+        if (this.activeGame == null) {
+            throw new IllegalStateException("game does not exist");
+        }
+
+        return this.activeGame.getGameOverview();
     }
 }

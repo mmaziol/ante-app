@@ -29,8 +29,8 @@ public class Ruleset {
     }
 
     private void setPlayers(List<Player> players) {
-        if (players == null || players.isEmpty() || players.size() < 2) {
-            throw new IllegalArgumentException("players cannot be null, empty or be less than 2");
+        if (players == null) {
+            throw new IllegalArgumentException("players cannot be null");
         }
 
         for (Player playersItem : players) {
@@ -123,6 +123,40 @@ public class Ruleset {
         }
 
         this.chipsValuePerPlayer = chipsValuePerPlayer;
+    }
+
+    public void addPlayer(Player player) {
+        if (player == null) {
+            throw new IllegalArgumentException("player cannot be null");
+        }
+
+        if (!isNameUnique(player.getName())) {
+            throw new IllegalArgumentException("this player already exists");
+        }
+
+        this.players.add(player);
+    }
+
+    public void removePlayer(Player player) {
+        if (player == null) {
+            throw new IllegalArgumentException("player cannot be null");
+        }
+
+        this.players.remove(player);
+    }
+
+    public boolean isNameUnique(String name) {
+        for (Player player : this.players) {
+            if (player.getName().equalsIgnoreCase(name)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean isReadyToStart() {
+        return this.players.size() >= 2;
     }
 
     public int getTotalPercentageValue() {

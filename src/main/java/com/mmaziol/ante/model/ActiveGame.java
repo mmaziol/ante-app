@@ -172,6 +172,20 @@ public class ActiveGame {
         return totalBuyIns;
     }
 
+    public Player getPlayerByName(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("name cannot be null");
+        }
+
+        for (Player player : this.ruleset.getPlayers()) {
+            if (player.getName().equalsIgnoreCase(name)) {
+                return player;
+            }
+        }
+
+        throw new IllegalArgumentException("player does not exist");
+    }
+
     private int getPlayerBuyIn(Player player) {
         return this.buyIns.get(player);
     }
