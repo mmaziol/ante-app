@@ -1,0 +1,44 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo__title {
+    margin: 0;
+    font-size: 40px;
+}
+
+.logo__subtitle {
+    margin: 0;
+    font-size: 12px;
+}
+
+.button {
+    font: inherit;
+    font-size: 18px;
+    text-decoration: none;
+    padding: 16px 32px;
+    cursor: pointer;
+}

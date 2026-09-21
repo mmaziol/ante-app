@@ -1,0 +1,101 @@
+body {
+    display: block;
+    align-items: unset;
+    justify-content: unset;
+    padding: 32px 16px 64px;
+}
+
+.setup {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 28px;
+}
+
+.setup-section {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.setup-section h2 {
+    margin: 0 0 4px;
+    font-size: 14px;
+}
+
+#players-list,
+#chips-list,
+#payouts-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.player-row,
+.chip-row,
+.payout-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 10px;
+}
+
+input,
+select {
+    font: inherit;
+    padding: 8px;
+}
+
+.chip-value,
+.payout-place,
+.payout-percentage {
+    width: 80px;
+}
+
+.add-button,
+.remove-player,
+.remove-chip,
+.remove-payout {
+    font: inherit;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.hint {
+    font-size: 9px;
+    opacity: 0.7;
+    margin: 0;
+}
+
+#level-increases-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#level-increases-table th,
+#level-increases-table td {
+    padding: 6px;
+    text-align: left;
+}
+
+#start-game-button {
+    align-self: center;
+    margin-top: 16px;
+}

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ANTE - SETUP</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/setup.css">
+    <script src="js/setup.js" defer></script>
+</head>
+<body>
+<main class="setup">
+    <h1 class="page-title">SETUP</h1>
+
+    <form id="setup-form">
+
+        <section class="setup-section" id="players-section">
+            <h2>Players</h2>
+            <ul id="players-list">
+                <li class="player-row">
+                    <input type="text" class="player-name" placeholder="Player name">
+                    <button type="button" class="remove-player">X</button>
+                </li>
+                <li class="player-row">
+                    <input type="text" class="player-name" placeholder="Player name">
+                    <button type="button" class="remove-player">X</button>
+                </li>
+            </ul>
+            <button type="button" id="add-player" class="add-button">+ Add Player</button>
+        </section>
+
+        <section class="setup-section" id="chips-section">
+            <h2>Chip Denominations</h2>
+            <ul id="chips-list">
+                <li class="chip-row">
+                    <input type="text" class="chip-color" placeholder="Color">
+                    <input type="number" class="chip-value" placeholder="Value" min="5" step="5">
+                    <button type="button" class="remove-chip">X</button>
+                </li>
+                <li class="chip-row">
+                    <input type="text" class="chip-color" placeholder="Color">
+                    <input type="number" class="chip-value" placeholder="Value" min="5" step="5">
+                    <button type="button" class="remove-chip">X</button>
+                </li>
+            </ul>
+            <button type="button" id="add-chip" class="add-button">+ Add Chip</button>
+        </section>
+
+        <section class="setup-section" id="payouts-section">
+            <h2>Payouts</h2>
+            <ul id="payouts-list">
+                <li class="payout-row">
+                    <label>Place <input type="number" class="payout-place" min="1"></label>
+                    <label>Percentage <input type="number" class="payout-percentage" min="1" max="100"></label>
+                    <button type="button" class="remove-payout">X</button>
+                </li>
+                <li class="payout-row">
+                    <label>Place <input type="number" class="payout-place" min="1"></label>
+                    <label>Percentage <input type="number" class="payout-percentage" min="1" max="100"></label>
+                    <button type="button" class="remove-payout">X</button>
+                </li>
+            </ul>
+            <button type="button" id="add-payout" class="add-button">+ Add Payout</button>
+        </section>
+
+        <section class="setup-section" id="blind-section">
+            <h2>Blind</h2>
+            <label class="field">Starting small blind
+                <input type="number" id="small-blind-value" min="1">
+            </label>
+            <label class="field">Blind increase interval (minutes)
+                <input type="number" id="blind-increase-minutes" min="1">
+            </label>
+        </section>
+
+        <section class="setup-section" id="ladder-section">
+            <h2>Blind Ladder</h2>
+            <label class="field">Number of levels
+                <input type="number" id="level-count" value="12" min="2" max="50">
+            </label>
+
+            <table id="level-increases-table">
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>Small Blind</th>
+                        <th>Big Blind</th>
+                        <th>Increase (%)</th>
+                    </tr>
+                </thead>
+                <tbody id="level-increases-list"></tbody>
+            </table>
+
+            <label class="field"><span id="overtime-increase-text">Overtime increase (level N+)</span>
+                <select id="overtime-increase">
+                    <option value="QUARTER">+25%</option>
+                    <option value="THIRD">+33%</option>
+                    <option value="HALF">+50%</option>
+                    <option value="DOUBLE" selected>+100%</option>
+                </select>
+            </label>
+        </section>
+
+        <section class="setup-section" id="money-section">
+            <h2>Money</h2>
+            <label class="field">Buy-in value
+                <input type="number" id="buy-in-value" min="1">
+            </label>
+            <label class="field">Currency
+                <input type="text" id="currency" placeholder="EUR">
+            </label>
+            <label class="field">Starting stack value per player
+                <input type="number" id="chips-value-per-player" min="1">
+            </label>
+        </section>
+
+        <button type="submit" id="start-game-button" class="button">START GAME</button>
+    </form>
+</main>
+</body>
+</html>
