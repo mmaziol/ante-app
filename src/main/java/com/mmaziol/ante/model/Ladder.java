@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ladder {
-    private static final int DEFAULT_LEVEL_COUNT = 12;
-    private static final int MAX_LEVEL_COUNT = 50;
+    private static final int DEFAULT_LEVEL_COUNT = 8;
+    private static final int MAX_LEVEL_COUNT = 16;
     private int levelCount;
     private Increase overtimeIncrease;
     private List<Increase> levelIncreases;

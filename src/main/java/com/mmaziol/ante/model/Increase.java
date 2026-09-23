@@ -1,7 +1,6 @@
 package com.mmaziol.ante.model;
 
 public enum Increase {
-    QUARTER(25),
     THIRD(33),
     HALF(50),
     DOUBLE(100);

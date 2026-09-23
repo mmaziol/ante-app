@@ -78,7 +78,7 @@
         <section class="setup-section" id="ladder-section">
             <h2>Blind Ladder</h2>
             <label class="field">Number of levels
-                <input type="number" id="level-count" value="8" min="2" max="20">
+                <input type="number" id="level-count" value="8" min="2" max="16">
             </label>
 
             <table id="level-increases-table">
@@ -102,24 +102,23 @@
 
             <label class="field"><span id="overtime-increase-text">Overtime increase (level N+)</span>
                 <select id="overtime-increase">
-                    <option value="QUARTER">+25%</option>
                     <option value="THIRD">+33%</option>
                     <option value="HALF">+50%</option>
                     <option value="DOUBLE" selected>+100%</option>
                 </select>
+            </label>
+            <label class="field">Starting stack value per player
+                <input type="number" id="chips-value-per-player" min="5" value="1000" step="5">
             </label>
         </section>
 
         <section class="setup-section" id="money-section">
             <h2>Money</h2>
             <label class="field">Buy-in value
-                <input type="number" id="buy-in-value" min="1">
+                <input type="number" id="buy-in-value" min="1" value="10">
             </label>
             <label class="field">Currency
-                <input type="text" id="currency" placeholder="EUR">
-            </label>
-            <label class="field">Starting stack value per player
-                <input type="number" id="chips-value-per-player" min="1">
+                <input type="text" id="currency" placeholder="EUR" value="EUR">
             </label>
         </section>
 
