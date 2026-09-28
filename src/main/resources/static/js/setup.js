@@ -68,6 +68,7 @@ const levelOneBigBlindElement = document.getElementById('level-one-big');
 const buyInValueElement = document.getElementById('buy-in-value');
 const currencyElement = document.getElementById('currency');
 const chipsValuePerPlayerElement = document.getElementById('chips-value-per-player');
+const setupFormElement = document.getElementById('setup-form');
 
 const INCREASE_PERCENTAGES = {
     THIRD: 33,
@@ -227,6 +228,140 @@ const getChipsValuePerPlayer = () => {
     return Number(chipsValuePerPlayerElement.value);
 };
 
+const validatePlayers = (players) => {
+    const errorSet = new Set();
+    const playersSet = new Set();
+
+    players.forEach((player) => {
+        if (player.name.trim() !== "") {
+            playersSet.add(player.name.toLowerCase().trim());
+        }
+    });
+
+    if (players.length < 2) {
+        errorSet.add("There need to be at least 2 players!");
+    }
+
+    if (playersSet.size !== players.length) {
+        errorSet.add("All player names must be unique and not empty!");
+    }
+
+    return errorSet;
+};
+
+const validateChips = (chips) => {
+    const errorSet = new Set();
+
+    chips.forEach((chip) => {
+        if (chip.color.trim() === "") {
+            errorSet.add("Chip colors cannot be empty!");
+        }
+
+        if (chip.value <= 0 || chip.value % 5 !== 0) {
+            errorSet.add("Invalid chip values!");
+        }
+    });
+
+    if (chips.length < 1) {
+        errorSet.add("There must be at least one available chip!");
+    }
+
+    return errorSet;
+};
+
+const validatePayouts = (payouts) => {
+    const errorSet = new Set();
+    let totalPercentage = 0;
+
+    payouts.forEach((payout) => {
+        if (payout.percentageValue <= 0) {
+            errorSet.add("Percentage cannot be zero or negative!");
+        }
+
+        totalPercentage += payout.percentageValue;
+    });
+
+    if (totalPercentage !== 100) {
+        errorSet.add("Percentage must add up to 100%!");
+    }
+
+    return errorSet;
+};
+
+const validateBlind = (blind) => {
+    const errorSet = new Set();
+
+    if (blind.smallBlindValue <= 0 || blind.smallBlindValue % 5 !== 0) {
+        errorSet.add("Invalid starting small blind value!");
+    }
+
+    if (blind.blindIncreaseTimeInMinutes <= 0) {
+        errorSet.add("Blind increase interval cannot equal zero or be negative!");
+    }
+
+    return errorSet;
+};
+
+const validateLadder = (ladder) => {
+    const errorSet = new Set();
+
+    if (ladder.levelCount <= 1 || ladder.levelCount > 16) {
+        errorSet.add("Number of levels has to be between 2 and 16!");
+    }
+
+    ladder.levelIncreases.forEach((increase) => {
+        if (!Object.hasOwn(INCREASE_PERCENTAGES, increase)) {
+            errorSet.add("Invalid percentage in levels!");
+        }
+    });
+
+    if (!Object.hasOwn(INCREASE_PERCENTAGES, ladder.overtimeIncrease)) {
+        errorSet.add("Invalid overtime increase!");
+    }
+
+    return errorSet;
+};
+
+const validateChipsValuePerPlayer = (chipsValuePerPlayer) => {
+    const errorSet = new Set();
+
+    if (chipsValuePerPlayer <= 0) {
+        errorSet.add("Starting stack cannot be zero or negative!");
+    }
+
+    if (chipsValuePerPlayer % 5 !== 0) {
+        errorSet.add("Starting stack needs to be divisible by 5!");
+    }
+
+    return errorSet;
+};
+
+const validateMoney = (money) => {
+    const errorSet = new Set();
+
+    if (money.buyInValue <= 0) {
+        errorSet.add("Buy-in value cannot be zero or negative!");
+    }
+
+    if (money.currency.trim() === "") {
+        errorSet.add("Invalid currency!");
+    }
+
+    return errorSet;
+};
+
+const validateRuleset = (ruleset) => {
+    return [
+        ...validatePlayers(ruleset.players),
+        ...validateChips(ruleset.chips),
+        ...validatePayouts(ruleset.payouts),
+        ...validateBlind(ruleset.blind),
+        ...validateLadder(ruleset.ladder),
+        ...validateChipsValuePerPlayer(ruleset.chipsValuePerPlayer),
+        ...validateMoney(ruleset.money)
+    ];
+};
+
 const getRuleset = () => {
     const players = getPlayers();
     const chips = getChips();
@@ -253,6 +388,20 @@ levelsListElement.addEventListener('change', (event) =>{
 startingSmallBlindElement.addEventListener('input', () => {
     swapLevelOneBlindsText(Number(startingSmallBlindElement.value));
     recalculateLevels();
+});
+
+setupFormElement.addEventListener('submit', (event) =>{
+    event.preventDefault();
+    const ruleset = getRuleset();
+    const rulesetErrors = validateRuleset(ruleset);
+
+    if (rulesetErrors.length === 0) {
+        console.log(ruleset);
+    } else {
+        rulesetErrors.forEach((error) => {
+            console.log(error);
+        });
+    }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
