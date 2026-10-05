@@ -1,0 +1,165 @@
+body {
+    display: block;
+    align-items: unset;
+    justify-content: unset;
+    padding: 32px 16px 64px;
+}
+
+.live {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 28px;
+}
+
+.live-board {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas:
+        "players controls chips"
+        "players timer    chips";
+    align-items: center;
+    gap: 24px;
+    padding: 16px;
+    border: 1px solid;
+}
+
+.players-panel,
+.chips-panel {
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.players-panel {
+    grid-area: players;
+}
+
+.chips-panel {
+    grid-area: chips;
+}
+
+.players-panel h2,
+.chips-panel h2 {
+    margin: 0 0 4px;
+    font-size: 14px;
+}
+
+#active-players-list,
+#eliminated-players-list,
+#chips-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.player-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.player-name {
+    flex: 1;
+}
+
+.player-buy-ins {
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.chip-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chip-icon {
+    width: 32px;
+    height: 32px;
+    border: 1px solid;
+    border-radius: 50%;
+}
+
+.eliminated-player-row .player-name,
+.eliminated-player-row .player-buy-ins {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+.buy-in-player,
+.kick-player,
+.return-player {
+    font: inherit;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.timer-controls {
+    grid-area: controls;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.timer-display {
+    grid-area: timer;
+    text-align: center;
+}
+
+.timer-label {
+    margin: 0;
+    font-size: 12px;
+}
+
+#timer {
+    margin: 0;
+    font-size: 96px;
+    font-variant-numeric: tabular-nums;
+}
+
+#blinds-section {
+    padding: 16px;
+    border: 1px solid;
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+}
+
+.blind {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.blind-label {
+    font-size: 12px;
+}
+
+.blind-value {
+    font-size: 40px;
+}
+
+@media (max-width: 720px) {
+    .live-board {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "controls"
+            "timer"
+            "players"
+            "chips";
+    }
+}

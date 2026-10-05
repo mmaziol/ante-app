@@ -35,12 +35,36 @@
             <h2>Chip Denominations</h2>
             <ul id="chips-list">
                 <li class="chip-row">
-                    <input type="text" class="chip-color" placeholder="Color">
+                    <select class="chip-color">
+                        <option value="" disabled selected>Color</option>
+                        <option value="white">White</option>
+                        <option value="red">Red</option>
+                        <option value="blue">Blue</option>
+                        <option value="green">Green</option>
+                        <option value="black">Black</option>
+                        <option value="purple">Purple</option>
+                        <option value="yellow">Yellow</option>
+                        <option value="orange">Orange</option>
+                        <option value="pink">Pink</option>
+                        <option value="grey">Grey</option>
+                    </select>
                     <input type="number" class="chip-value" placeholder="Value" min="5" step="5">
                     <button type="button" class="remove-chip">X</button>
                 </li>
                 <li class="chip-row">
-                    <input type="text" class="chip-color" placeholder="Color">
+                    <select class="chip-color">
+                        <option value="" disabled selected>Color</option>
+                        <option value="white">White</option>
+                        <option value="red">Red</option>
+                        <option value="blue">Blue</option>
+                        <option value="green">Green</option>
+                        <option value="black">Black</option>
+                        <option value="purple">Purple</option>
+                        <option value="yellow">Yellow</option>
+                        <option value="orange">Orange</option>
+                        <option value="pink">Pink</option>
+                        <option value="grey">Grey</option>
+                    </select>
                     <input type="number" class="chip-value" placeholder="Value" min="5" step="5">
                     <button type="button" class="remove-chip">X</button>
                 </li>
@@ -123,6 +147,7 @@
         </section>
 
         <button type="submit" id="start-game-button" class="button">START GAME</button>
+        <div id="errors-list"></div>
     </form>
 </main>
 </body>
