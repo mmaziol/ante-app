@@ -33,6 +33,11 @@ public class GameController {
         return this.gameService.getGameLiveStats();
     }
 
+    @GetMapping("/ruleset")
+    public Ruleset getRuleset() {
+        return this.gameService.getRuleset();
+    }
+
     @GetMapping("/overview")
     public GameOverview getGameOverview() {
         return this.gameService.getGameOverview();

@@ -105,4 +105,12 @@ public class GameService {
 
         return this.activeGame.getGameOverview();
     }
+
+    public Ruleset getRuleset() {
+        if (this.activeGame == null) {
+            throw new IllegalStateException("game does not exist");
+        }
+
+        return this.activeGame.getRuleset();
+    }
 }
