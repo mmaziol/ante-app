@@ -22,8 +22,8 @@ body {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     grid-template-areas:
-        "players controls chips"
-        "players timer    chips";
+        'players controls chips'
+        'players timer    chips';
     align-items: center;
     gap: 24px;
     padding: 16px;
@@ -157,9 +157,9 @@ body {
     .live-board {
         grid-template-columns: 1fr;
         grid-template-areas:
-            "controls"
-            "timer"
-            "players"
-            "chips";
+            'controls'
+            'timer'
+            'players'
+            'chips';
     }
 }

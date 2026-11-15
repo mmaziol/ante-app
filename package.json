@@ -1,0 +1,11 @@
+{
+  "name": "ante-app",
+  "private": true,
+  "scripts": {
+    "format": "prettier --write src/main/resources/static",
+    "format:check": "prettier --check src/main/resources/static"
+  },
+  "devDependencies": {
+    "prettier": "3.10.1"
+  }
+}

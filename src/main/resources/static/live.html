@@ -1,74 +1,74 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ANTE - LIVE</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/live.css">
-    <script src="js/live.js" defer></script>
-</head>
-<body>
-<main class="live">
-    <h1 class="page-title">LIVE</h1>
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+        />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>ANTE - LIVE</title>
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/live.css" />
+        <script src="js/live.js" defer></script>
+    </head>
+    <body>
+        <main class="live">
+            <h1 class="page-title">LIVE</h1>
 
-    <section class="live-board" id="live-board">
+            <section class="live-board" id="live-board">
+                <div class="players-panel">
+                    <h2>Active players</h2>
+                    <div id="active-players-error"></div>
+                    <ul id="active-players-list"></ul>
 
-        <div class="players-panel">
-            <h2>Active players</h2>
-            <div id="active-players-error"></div>
-            <ul id="active-players-list"></ul>
+                    <h2>Eliminated players</h2>
+                    <ul id="eliminated-players-list">
+                        <!-- example row to preview the layout, live.js will replace it -->
+                        <li class="player-row eliminated-player-row">
+                            <span class="player-name">Jordan</span>
+                            <span class="player-buy-ins">Buy-ins: 1</span>
+                            <button type="button" class="return-player">Return</button>
+                        </li>
+                    </ul>
+                </div>
 
-            <h2>Eliminated players</h2>
-            <ul id="eliminated-players-list">
-                <!-- example row to preview the layout, live.js will replace it -->
-                <li class="player-row eliminated-player-row">
-                    <span class="player-name">Jordan</span>
-                    <span class="player-buy-ins">Buy-ins: 1</span>
-                    <button type="button" class="return-player">Return</button>
-                </li>
-            </ul>
-        </div>
+                <div class="timer-controls">
+                    <button type="button" id="stop-timer-button" class="button">STOP</button>
+                    <button type="button" id="resume-timer-button" class="button">RESUME</button>
+                </div>
 
-        <div class="timer-controls">
-            <button type="button" id="stop-timer-button" class="button">STOP</button>
-            <button type="button" id="resume-timer-button" class="button">RESUME</button>
-        </div>
+                <div class="timer-display">
+                    <p class="timer-label">Next blinds in</p>
+                    <p id="timer">--:--</p>
+                </div>
 
-        <div class="timer-display">
-            <p class="timer-label">Next blinds in</p>
-            <p id="timer">--:--</p>
-        </div>
+                <div class="chips-panel">
+                    <h2>Chips</h2>
+                    <ul id="chips-list">
+                        <!-- example rows to preview the layout, live.js will replace them -->
+                        <li class="chip-row">
+                            <img class="chip-icon" alt="White chip" />
+                            <span class="chip-value">5</span>
+                        </li>
+                        <li class="chip-row">
+                            <img class="chip-icon" alt="Red chip" />
+                            <span class="chip-value">25</span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
 
-        <div class="chips-panel">
-            <h2>Chips</h2>
-            <ul id="chips-list">
-                <!-- example rows to preview the layout, live.js will replace them -->
-                <li class="chip-row">
-                    <img class="chip-icon" alt="White chip">
-                    <span class="chip-value">5</span>
-                </li>
-                <li class="chip-row">
-                    <img class="chip-icon" alt="Red chip">
-                    <span class="chip-value">25</span>
-                </li>
-            </ul>
-        </div>
-
-    </section>
-
-    <section class="live-section" id="blinds-section">
-        <p class="blind">
-            <span class="blind-label">Small blind</span>
-            <span class="blind-value" id="current-small-blind">-</span>
-        </p>
-        <p class="blind">
-            <span class="blind-label">Big blind</span>
-            <span class="blind-value" id="current-big-blind">-</span>
-        </p>
-    </section>
-</main>
-</body>
+            <section class="live-section" id="blinds-section">
+                <p class="blind">
+                    <span class="blind-label">Small blind</span>
+                    <span class="blind-value" id="current-small-blind">-</span>
+                </p>
+                <p class="blind">
+                    <span class="blind-label">Big blind</span>
+                    <span class="blind-value" id="current-big-blind">-</span>
+                </p>
+            </section>
+        </main>
+    </body>
 </html>

@@ -90,14 +90,14 @@ const INCREASE_PERCENTAGES = {
 };
 
 const swapLevelOneBlindsText = (smallBlindValue) => {
-    if (startingSmallBlindElement.value !== "" && !(smallBlindValue % 5)) {
+    if (startingSmallBlindElement.value !== '' && !(smallBlindValue % 5)) {
         levelOneSmallBlindElement.textContent = `${smallBlindValue}`;
         levelOneBigBlindElement.textContent = `${smallBlindValue * 2}`;
     } else {
         levelOneSmallBlindElement.textContent = `-`;
         levelOneBigBlindElement.textContent = `-`;
     }
-}
+};
 
 const addLevelRow = (levelNumber) => {
     const row = document.createElement('tr');
@@ -140,7 +140,7 @@ const recalculateLevels = () => {
     let smallBlindValue = Number(startingSmallBlindElement.value);
     const rows = levelsListElement.querySelectorAll('.level-increase-row');
 
-    if (startingSmallBlindElement.value !== "" && !(smallBlindValue % 5)) {
+    if (startingSmallBlindElement.value !== '' && !(smallBlindValue % 5)) {
         rows.forEach((row) => {
             let smallBlindRow = row.querySelector('.level-small-blind');
             let bigBlindRow = row.querySelector('.level-big-blind');
@@ -156,16 +156,16 @@ const recalculateLevels = () => {
         rows.forEach((row) => {
             let smallBlindRow = row.querySelector('.level-small-blind');
             let bigBlindRow = row.querySelector('.level-big-blind');
-            smallBlindRow.textContent = "-";
-            bigBlindRow.textContent = "-";
+            smallBlindRow.textContent = '-';
+            bigBlindRow.textContent = '-';
         });
     }
 };
 
-const getMultipliedSmallBlind = (smallBlindValue, increasePercentageKey)  => {
+const getMultipliedSmallBlind = (smallBlindValue, increasePercentageKey) => {
     const multiplier = (100 + INCREASE_PERCENTAGES[increasePercentageKey]) / 100;
 
-    return (Math.round((smallBlindValue * multiplier) / 5)) * 5;
+    return Math.round((smallBlindValue * multiplier) / 5) * 5;
 };
 
 const getPlayers = () => {
@@ -174,7 +174,7 @@ const getPlayers = () => {
 
     rows.forEach((row) => {
         const name = row.querySelector('.player-name').value;
-        playerList.push({name});
+        playerList.push({ name });
     });
 
     return playerList;
@@ -187,8 +187,8 @@ const getChips = () => {
     rows.forEach((row) => {
         const color = row.querySelector('.chip-color').value;
         const value = Number(row.querySelector('.chip-value').value);
-        
-        chipList.push({color, value});
+
+        chipList.push({ color, value });
     });
 
     return chipList;
@@ -202,7 +202,7 @@ const getPayouts = () => {
         const place = Number(row.querySelector('.payout-place').value);
         const percentageValue = Number(row.querySelector('.payout-percentage').value);
 
-        payoutList.push({place, percentageValue});
+        payoutList.push({ place, percentageValue });
     });
 
     return payoutList;
@@ -212,7 +212,7 @@ const getBlind = () => {
     const smallBlindValue = Number(startingSmallBlindElement.value);
     const blindIncreaseTimeInMinutes = Number(blindIncreaseTimeInMinutesElement.value);
 
-    return {smallBlindValue, blindIncreaseTimeInMinutes};
+    return { smallBlindValue, blindIncreaseTimeInMinutes };
 };
 
 const getLadder = () => {
@@ -227,14 +227,14 @@ const getLadder = () => {
         levelIncreases.push(increaseValue);
     });
 
-    return {levelCount, overtimeIncrease, levelIncreases};
+    return { levelCount, overtimeIncrease, levelIncreases };
 };
 
 const getMoney = () => {
     const buyInValue = Number(buyInValueElement.value);
     const currency = currencyElement.value;
 
-    return {buyInValue, currency};
+    return { buyInValue, currency };
 };
 
 const getChipsValuePerPlayer = () => {
@@ -246,17 +246,17 @@ const validatePlayers = (players) => {
     const playersSet = new Set();
 
     players.forEach((player) => {
-        if (player.name.trim() !== "") {
+        if (player.name.trim() !== '') {
             playersSet.add(player.name.toLowerCase().trim());
         }
     });
 
     if (players.length < 2) {
-        errorSet.add("Add at least 2 players to start a game!");
+        errorSet.add('Add at least 2 players to start a game!');
     }
 
     if (playersSet.size !== players.length) {
-        errorSet.add("Every player needs a name, and no two players can share one (names are not case-sensitive)!");
+        errorSet.add('Every player needs a name, and no two players can share one (names are not case-sensitive)!');
     }
 
     return errorSet;
@@ -266,17 +266,17 @@ const validateChips = (chips) => {
     const errorSet = new Set();
 
     chips.forEach((chip) => {
-        if (chip.color.trim() === "") {
-            errorSet.add("Every chip needs a color!");
+        if (chip.color.trim() === '') {
+            errorSet.add('Every chip needs a color!');
         }
 
         if (chip.value <= 0 || chip.value % 5 !== 0) {
-            errorSet.add("Every chip value must be greater than 0 and a multiple of 5!");
+            errorSet.add('Every chip value must be greater than 0 and a multiple of 5!');
         }
     });
 
     if (chips.length < 1) {
-        errorSet.add("Add at least one chip!");
+        errorSet.add('Add at least one chip!');
     }
 
     return errorSet;
@@ -288,7 +288,7 @@ const validatePayouts = (payouts) => {
 
     payouts.forEach((payout) => {
         if (payout.percentageValue <= 0) {
-            errorSet.add("Every payout percentage must be greater than 0%!");
+            errorSet.add('Every payout percentage must be greater than 0%!');
         }
 
         totalPercentage += payout.percentageValue;
@@ -305,11 +305,11 @@ const validateBlind = (blind) => {
     const errorSet = new Set();
 
     if (blind.smallBlindValue <= 0 || blind.smallBlindValue % 5 !== 0) {
-        errorSet.add("Starting small blind must be greater than 0 and a multiple of 5!");
+        errorSet.add('Starting small blind must be greater than 0 and a multiple of 5!');
     }
 
     if (blind.blindIncreaseTimeInMinutes <= 0) {
-        errorSet.add("Blind increase interval must be greater than 0 minutes!");
+        errorSet.add('Blind increase interval must be greater than 0 minutes!');
     }
 
     return errorSet;
@@ -319,17 +319,17 @@ const validateLadder = (ladder) => {
     const errorSet = new Set();
 
     if (ladder.levelCount <= 1 || ladder.levelCount > 16) {
-        errorSet.add("Number of levels must be between 2 and 16!");
+        errorSet.add('Number of levels must be between 2 and 16!');
     }
 
     ladder.levelIncreases.forEach((increase) => {
         if (!Object.hasOwn(INCREASE_PERCENTAGES, increase)) {
-            errorSet.add("Every level increase must be +33%, +50% or +100%!");
+            errorSet.add('Every level increase must be +33%, +50% or +100%!');
         }
     });
 
     if (!Object.hasOwn(INCREASE_PERCENTAGES, ladder.overtimeIncrease)) {
-        errorSet.add("Overtime increase must be +33%, +50% or +100%!");
+        errorSet.add('Overtime increase must be +33%, +50% or +100%!');
     }
 
     return errorSet;
@@ -339,11 +339,11 @@ const validateChipsValuePerPlayer = (chipsValuePerPlayer) => {
     const errorSet = new Set();
 
     if (chipsValuePerPlayer <= 0) {
-        errorSet.add("Starting stack must be greater than 0!");
+        errorSet.add('Starting stack must be greater than 0!');
     }
 
     if (chipsValuePerPlayer % 5 !== 0) {
-        errorSet.add("Starting stack must be a multiple of 5!");
+        errorSet.add('Starting stack must be a multiple of 5!');
     }
 
     return errorSet;
@@ -353,11 +353,11 @@ const validateMoney = (money) => {
     const errorSet = new Set();
 
     if (money.buyInValue <= 0) {
-        errorSet.add("Buy-in must be greater than 0!");
+        errorSet.add('Buy-in must be greater than 0!');
     }
 
-    if (money.currency.trim() === "") {
-        errorSet.add("Currency cannot be empty!");
+    if (money.currency.trim() === '') {
+        errorSet.add('Currency cannot be empty!');
     }
 
     return errorSet;
@@ -371,7 +371,7 @@ const validateRuleset = (ruleset) => {
         ...validateBlind(ruleset.blind),
         ...validateLadder(ruleset.ladder),
         ...validateChipsValuePerPlayer(ruleset.chipsValuePerPlayer),
-        ...validateMoney(ruleset.money)
+        ...validateMoney(ruleset.money),
     ];
 };
 
@@ -384,7 +384,7 @@ const getRuleset = () => {
     const money = getMoney();
     const chipsValuePerPlayer = getChipsValuePerPlayer();
 
-    return {players, chips, payouts, blind, ladder, money, chipsValuePerPlayer};
+    return { players, chips, payouts, blind, ladder, money, chipsValuePerPlayer };
 };
 
 const displayError = (error) => {
@@ -399,7 +399,7 @@ levelCountElement.addEventListener('input', () => {
     recalculateLevels();
 });
 
-levelsListElement.addEventListener('change', (event) =>{
+levelsListElement.addEventListener('change', (event) => {
     if (event.target.classList.contains('level-increase-select')) {
         recalculateLevels();
     }
@@ -410,7 +410,7 @@ startingSmallBlindElement.addEventListener('input', () => {
     recalculateLevels();
 });
 
-setupFormElement.addEventListener('submit', async event =>{
+setupFormElement.addEventListener('submit', async (event) => {
     event.preventDefault();
     errorsListElement.replaceChildren();
     const ruleset = getRuleset();
@@ -419,9 +419,9 @@ setupFormElement.addEventListener('submit', async event =>{
     const options = {
         method: 'POST',
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(ruleset)
+        body: JSON.stringify(ruleset),
     };
 
     if (rulesetErrors.length === 0) {
@@ -429,13 +429,13 @@ setupFormElement.addEventListener('submit', async event =>{
             const response = await fetch(url, options);
 
             if (response.ok) {
-                window.location.href = "/live.html";
+                window.location.href = '/live.html';
             } else {
                 displayError(`The server refused to start the game (status ${response.status})!`);
             }
         } catch (error) {
             console.error(error);
-            displayError("Could not reach the server. Check that it is running and try again!");
+            displayError('Could not reach the server. Check that it is running and try again!');
         }
     } else {
         rulesetErrors.forEach((error) => {
