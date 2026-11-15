@@ -7,6 +7,36 @@ const createNewElement = (elementType, className, text) => {
     element.textContent = text;
 
     return element;
+};
+
+activePlayersListElement.addEventListener('click', async (event) => {
+    if (event.target.classList.contains('buy-in-player')) {
+        const nameElement = event.target.closest('.player-row').querySelector('.player-name');
+        await sendPlayerAction('buy-in', nameElement.textContent);
+    } else if (event.target.classList.contains('kick-player')) {
+        const nameElement = event.target.closest('.player-row').querySelector('.player-name');
+        await sendPlayerAction('eliminate', nameElement.textContent);
+    }
+});
+
+async function sendPlayerAction(action, playerName) {
+    const name = encodeURIComponent(playerName);
+    const url = `/api/game/${action}/${name}`;
+    const options = {
+        method: 'POST',
+    };
+
+    try {
+        const response = await fetch(url, options);
+
+        if (response.ok) {
+            await showActivePlayers();
+        } else {
+            console.log(`${response.status}`);
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 async function getRuleset() {
@@ -25,7 +55,7 @@ async function getRuleset() {
     }
 }
 
-async function getLiveStats() {
+async function getGameLiveStats() {
     const url = '/api/game/live-stats';
 
     try {
@@ -41,40 +71,35 @@ async function getLiveStats() {
     }
 }
 
-async function getPlayerNames() {
-    const ruleset = await getRuleset();
+const getPlayerBuyInCount = (buyIns, playerName) => {
+    const match = buyIns.find((element) => element.playerName === playerName);
 
-    if (ruleset === undefined) {
-        console.log(`ruleset is undefined`);
-        return;
-    }
-
-    const playersList = ruleset.players;
-    const playerNames = [];
-
-    playersList.forEach((player) => {
-        playerNames.push(player.name);
-    });
-
-    return playerNames;
-}
+    return match.buyInCount;
+};
 
 async function showActivePlayers() {
-    const players = await getPlayerNames();
+    const liveStats = await getGameLiveStats();
 
-    if (players === undefined)
-    {
-        const errorMessage = createNewElement('p', 'active-players-error', 'Couldn\'t load active players');
-        activePlayersErrorElement.appendChild(errorMessage);
+    if (liveStats === undefined) {
+        console.log(`live stats are undefined`);
         return;
     }
 
-    players.forEach(player => {
+    const players = liveStats.activePlayers;
+    const buyInCounts = liveStats.buyInCounts;
+
+    activePlayersListElement.replaceChildren();
+
+    players.forEach((player) => {
         const row = document.createElement('li');
         row.className = 'player-row';
 
         const name = createNewElement('span', 'player-name', player);
-        const buyIns = createNewElement('span', 'player-buy-ins', 'Buy-ins: 1');
+        const buyIns = createNewElement(
+            'span',
+            'player-buy-ins',
+            `Buy-ins: ${getPlayerBuyInCount(buyInCounts, player)}`,
+        );
         const buyInButton = createNewElement('button', 'buy-in-player', 'Buy-in');
         buyInButton.type = 'button';
         const kickButton = createNewElement('button', 'kick-player', 'Kick');
