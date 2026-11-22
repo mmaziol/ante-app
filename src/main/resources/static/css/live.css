@@ -132,9 +132,19 @@ body {
 #blinds-section {
     padding: 16px;
     border: 1px solid;
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr auto auto 1fr;
+    align-items: center;
     gap: 48px;
+}
+
+#blinds-section > .blind:first-child {
+    grid-column: 2;
+}
+
+#blinds-section > .pot {
+    grid-column: 4;
+    justify-self: end;
 }
 
 .blind {
