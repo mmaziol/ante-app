@@ -37,32 +37,25 @@
 
                 <div class="chips-panel">
                     <h2>Chips</h2>
-                    <ul id="chips-list">
-                        <!-- example rows to preview the layout, live.js will replace them -->
-                        <li class="chip-row">
-                            <img class="chip-icon" alt="White chip" />
-                            <span class="chip-value">5</span>
-                        </li>
-                        <li class="chip-row">
-                            <img class="chip-icon" alt="Red chip" />
-                            <span class="chip-value">25</span>
-                        </li>
-                    </ul>
+                    <ul id="chips-list"></ul>
                 </div>
             </section>
 
             <section class="live-section" id="blinds-section">
                 <p class="blind">
                     <span class="blind-label">Small blind</span>
-                    <span class="blind-value" id="current-small-blind">-</span>
+                    <span class="blind-value" id="current-small-blind"></span>
                 </p>
                 <p class="blind">
                     <span class="blind-label">Big blind</span>
-                    <span class="blind-value" id="current-big-blind">-</span>
+                    <span class="blind-value" id="current-big-blind"></span>
                 </p>
                 <p class="blind pot">
                     <span class="blind-label">Pot</span>
-                    <span class="blind-value" id="current-pot">-</span>
+                    <span class="pot-amount">
+                        <span class="blind-value" id="current-pot"></span>
+                        <span class="pot-currency" id="pot-currency"></span>
+                    </span>
                 </p>
             </section>
         </main>

@@ -1,5 +1,10 @@
 const activePlayersListElement = document.getElementById('active-players-list');
 const eliminatedPlayersListElement = document.getElementById('eliminated-players-list');
+const currentPotElement = document.getElementById('current-pot');
+const currentSmallBlindElement = document.getElementById('current-small-blind');
+const currentBigBlindElement = document.getElementById('current-big-blind');
+const chipsListElement = document.getElementById('chips-list');
+const potCurrencyElement = document.getElementById('pot-currency');
 
 const createNewElement = (elementType, className, text) => {
     const element = document.createElement(elementType);
@@ -46,8 +51,8 @@ async function sendPlayerAction(action, playerName) {
     }
 }
 
-async function getGameLiveStats() {
-    const url = '/api/game/live-stats';
+async function fetchJson(endpoint) {
+    const url = `/api/game/${endpoint}`;
 
     try {
         const response = await fetch(url);
@@ -113,22 +118,72 @@ const generatePlayerRow = (playerName, buyInCount) => {
     return row;
 };
 
+const showChips = (chips) => {
+    chipsListElement.replaceChildren();
+
+    chips.forEach((chip) => {
+        const row = generateChipRow(chip.color, chip.value);
+
+        chipsListElement.appendChild(row);
+    });
+};
+
+const generateChipRow = (color, value) => {
+    const row = document.createElement('li');
+    row.className = 'chip-row';
+
+    const chipColor = createNewElement('span', 'chip-icon', '');
+    chipColor.dataset.color = color;
+    const chipValue = createNewElement('span', 'chip-value', value);
+
+    row.appendChild(chipColor);
+    row.appendChild(chipValue);
+
+    return row;
+};
+
+const showValue = (element, value) => {
+    element.textContent = `${value}`;
+};
+
+async function loadRuleset() {
+    const ruleset = await fetchJson('ruleset');
+
+    if (ruleset === undefined) {
+        console.log('ruleset is undefined');
+        return;
+    }
+
+    const currency = ruleset.money.currency;
+    const chips = ruleset.chips;
+
+    showChips(chips);
+    showValue(potCurrencyElement, currency);
+}
+
 async function refreshLivePage() {
-    const liveStats = await getGameLiveStats();
+    const liveStats = await fetchJson('live-stats');
 
     if (liveStats === undefined) {
-        console.log(`live stats are undefined`);
+        console.log('liveStats is undefined');
         return;
     }
 
     const activePlayers = liveStats.activePlayers;
     const eliminatedPlayers = liveStats.eliminatedPlayers;
     const buyInCounts = liveStats.buyInCounts;
+    const currentPot = liveStats.totalPot;
+    const currentSmallBlind = liveStats.currentSmallBlind;
+    const currentBigBlind = liveStats.currentBigBlind;
 
     showActivePlayers(activePlayers, buyInCounts);
     showEliminatedPlayers(eliminatedPlayers, buyInCounts);
+    showValue(currentPotElement, currentPot);
+    showValue(currentSmallBlindElement, currentSmallBlind);
+    showValue(currentBigBlindElement, currentBigBlind);
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+    await loadRuleset();
     await refreshLivePage();
 });
