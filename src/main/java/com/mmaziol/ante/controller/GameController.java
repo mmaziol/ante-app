@@ -71,6 +71,12 @@ public class GameController {
         this.gameService.removeEliminatedPlayer(player);
     }
 
+    @PostMapping("/rebuy/{playerName}")
+    public void rebuyPlayer(@PathVariable String playerName) {
+        Player player = this.gameService.getPlayerByName(playerName);
+        this.gameService.rebuyPlayer(player);
+    }
+
     @PostMapping("/timer/stop")
     public void stopTimer() {
         this.gameService.stopTimer();

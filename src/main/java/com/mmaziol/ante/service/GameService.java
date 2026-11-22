@@ -74,6 +74,14 @@ public class GameService {
         this.activeGame.removeEliminatedPlayer(player);
     }
 
+    public void rebuyPlayer(Player player) {
+        if (this.activeGame == null) {
+            throw new IllegalStateException("game does not exist");
+        }
+
+        this.activeGame.rebuyPlayer(player);
+    }
+
     public void stopTimer() {
         if (this.activeGame == null) {
             throw new IllegalStateException("game does not exist");

@@ -161,6 +161,11 @@ public class ActiveGame {
         this.getBuyIns().replace(player, playerValue + 1);
     }
 
+    public void rebuyPlayer(Player player) {
+        this.removeEliminatedPlayer(player);
+        this.addBuyIn(player);
+    }
+
     public int getTotalBuyIns() {
         int totalBuyIns = 0;
 
