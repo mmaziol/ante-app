@@ -17,8 +17,10 @@ A small web app for running home poker tournaments. The host sets up the game on
 3. **Live** (`live.html`): the game is running:
     - active players with their buy-in count, plus Buy-in and Kick buttons
     - eliminated players with a Re-buy button (puts the player back in and counts one more buy-in)
-    - current blinds, pot and blind timer
-4. **Results** (`results.html`): final standings and payouts.
+    - current blinds, pot and blind timer (counts down to the next blind level)
+    - Stop and Resume buttons to pause and continue the blind timer
+    - Finish button that ends the game after a confirmation
+4. **Results** (`results.html`): final standings and payouts of the finished game.
 
 The big blind is always twice the small blind. The ruleset is checked once when the game starts and stays locked for the whole game.
 
@@ -46,7 +48,7 @@ mvnw.cmd spring-boot:run
 
 Then open <http://localhost:8080>.
 
-The game is kept in memory, so restarting the server clears the current game.
+The game is kept in memory, so restarting the server clears the current game and the last result.
 
 ### Formatting the frontend (optional)
 
@@ -64,7 +66,7 @@ npm run format:check  # only check, don't change anything
 src/main/java/com/mmaziol/ante/
 ├── AnteApplication.java   # Spring Boot entry point
 ├── controller/            # REST endpoints (GameController)
-├── service/               # GameService, holds the current game
+├── service/               # GameService, holds the current game and the last result
 ├── model/                 # game rules and state: Ruleset, ActiveGame, Ladder, Blind, Chip, Payout, Money, Player
 └── dto/                   # what the API sends back: GameLiveStats, GameOverview, ...
 
@@ -82,9 +84,10 @@ All endpoints are under `/api/game`.
 | :--- | :--- | :--- |
 | `POST` | `/start` | Starts a new game from the ruleset sent by the setup page |
 | `GET` | `/ruleset` | The ruleset of the current game |
-| `GET` | `/live-stats` | Live state: blinds, timer, pot, active and eliminated players, buy-in counts |
-| `GET` | `/overview` | Summary of the game, used for the results page |
-| `POST` | `/finish` | Ends the current game |
+| `GET` | `/live-stats` | Live state: blinds, timer, pause state, pot, active and eliminated players, buy-in counts |
+| `GET` | `/overview` | Summary of the game in progress: winner, standings with payouts, pot, buy-in counts |
+| `POST` | `/finish` | Ends the current game and saves its summary as the last result |
+| `GET` | `/result` | Summary of the last finished game, used for the results page |
 | `POST` | `/buy-in/{playerName}` | Adds one buy-in for a player |
 | `POST` | `/eliminate/{playerName}` | Kicks a player out (the last player standing can't be kicked) |
 | `POST` | `/rebuy/{playerName}` | Puts an eliminated player back in and adds one buy-in |

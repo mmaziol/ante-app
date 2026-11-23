@@ -8,6 +8,7 @@ const potCurrencyElement = document.getElementById('pot-currency');
 const timerElement = document.getElementById('timer');
 const stopTimerButtonElement = document.getElementById('stop-timer-button');
 const resumeTimerButtonElement = document.getElementById('resume-timer-button');
+const finishGameButtonElement = document.getElementById('finish-game-button');
 
 let deadline = null;
 let id = null;
@@ -73,6 +74,12 @@ resumeTimerButtonElement.addEventListener('click', async () => {
         }
     } catch (error) {
         console.log(error);
+    }
+});
+
+finishGameButtonElement.addEventListener('click', async () => {
+    if (await askConfirmation('Are you sure that game has finished?')) {
+        await finishGame();
     }
 });
 
@@ -279,6 +286,30 @@ const stopTimer = () => {
     clearInterval(id);
     id = null;
 };
+
+async function askConfirmation(message) {
+    return window.confirm(message);
+}
+
+async function finishGame() {
+    const url = '/api/game/finish';
+    const options = {
+        method: 'POST',
+    };
+
+    try {
+        const response = await fetch(url, options);
+
+        if (response.ok) {
+            stopTimer();
+            window.location.href = '/results.html';
+        } else {
+            console.log(`${response.status}`);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
     await loadRuleset();

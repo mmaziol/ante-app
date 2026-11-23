@@ -209,12 +209,11 @@ body {
     gap: 48px;
 }
 
-#blinds-section > .blind:first-child {
-    grid-column: 2;
+#blinds-section > .pot {
+    justify-self: start;
 }
 
-#blinds-section > .pot {
-    grid-column: 4;
+#finish-game-button {
     justify-self: end;
 }
 

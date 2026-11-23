@@ -42,6 +42,13 @@
             </section>
 
             <section class="live-section" id="blinds-section">
+                <p class="blind pot">
+                    <span class="blind-label">Pot</span>
+                    <span class="pot-amount">
+                        <span class="blind-value" id="current-pot"></span>
+                        <span class="pot-currency" id="pot-currency"></span>
+                    </span>
+                </p>
                 <p class="blind">
                     <span class="blind-label">Small blind</span>
                     <span class="blind-value" id="current-small-blind"></span>
@@ -50,13 +57,7 @@
                     <span class="blind-label">Big blind</span>
                     <span class="blind-value" id="current-big-blind"></span>
                 </p>
-                <p class="blind pot">
-                    <span class="blind-label">Pot</span>
-                    <span class="pot-amount">
-                        <span class="blind-value" id="current-pot"></span>
-                        <span class="pot-currency" id="pot-currency"></span>
-                    </span>
-                </p>
+                <button type="button" id="finish-game-button" class="button">FINISH</button>
             </section>
         </main>
     </body>

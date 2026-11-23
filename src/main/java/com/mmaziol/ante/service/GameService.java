@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class GameService {
     private ActiveGame activeGame;
+    private GameOverview result;
 
     public GameService() {
         this.setActiveGame(null);
+        this.setResult(null);
     }
 
     public ActiveGame getActiveGame() {
@@ -21,6 +23,22 @@ public class GameService {
 
     public void setActiveGame(ActiveGame activeGame) {
         this.activeGame = activeGame;
+    }
+
+    public GameOverview getResult() {
+        return this.result;
+    }
+
+    public void setResult(GameOverview result) {
+        this.result = result;
+    }
+
+    public GameOverview getFinalResult() {
+        if (this.result == null) {
+            throw new IllegalStateException("no game has finished since the server started");
+        }
+
+        return this.result;
     }
 
     public void startGame(Ruleset ruleset) {
@@ -39,6 +57,11 @@ public class GameService {
     }
 
     public void finishGame() {
+        if (this.activeGame == null) {
+            throw new IllegalStateException("game does not exist");
+        }
+
+        this.setResult(this.activeGame.getGameOverview());
         this.setActiveGame(null);
     }
 

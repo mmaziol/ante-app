@@ -53,6 +53,11 @@ public class GameController {
         this.gameService.finishGame();
     }
 
+    @GetMapping("/result")
+    public GameOverview getFinalResult() {
+        return this.gameService.getFinalResult();
+    }
+
     @PostMapping("/buy-in/{playerName}")
     public void buyInPlayer(@PathVariable String playerName) {
         Player player = this.gameService.getPlayerByName(playerName);
