@@ -284,9 +284,10 @@ public class ActiveGame {
         List<String> activePlayers = this.getNameList(this.getActivePlayers());
         List<String> eliminatedPlayers = this.getNameList(this.getEliminatedPlayers());
         List<PlayerBuyInCount> buyInCounts = this.generateCurrentPlayerBuyInCount();
+        boolean paused = this.paused;
 
         return new GameLiveStats(currentSmallBlind, currentBigBlind, secondsUntilNextBlind,
-                totalPot, activePlayers, eliminatedPlayers, buyInCounts);
+                totalPot, activePlayers, eliminatedPlayers, buyInCounts, paused);
     }
 
     private String getWinner() {

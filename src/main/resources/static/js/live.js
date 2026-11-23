@@ -5,6 +5,13 @@ const currentSmallBlindElement = document.getElementById('current-small-blind');
 const currentBigBlindElement = document.getElementById('current-big-blind');
 const chipsListElement = document.getElementById('chips-list');
 const potCurrencyElement = document.getElementById('pot-currency');
+const timerElement = document.getElementById('timer');
+const stopTimerButtonElement = document.getElementById('stop-timer-button');
+const resumeTimerButtonElement = document.getElementById('resume-timer-button');
+
+let deadline = null;
+let id = null;
+let isRefreshing = false;
 
 const createNewElement = (elementType, className, text) => {
     const element = document.createElement(elementType);
@@ -28,6 +35,44 @@ eliminatedPlayersListElement.addEventListener('click', async (event) => {
     if (event.target.classList.contains('rebuy-player')) {
         const nameElement = event.target.closest('.player-row').querySelector('.player-name');
         await sendPlayerAction('rebuy', nameElement.textContent);
+    }
+});
+
+stopTimerButtonElement.addEventListener('click', async () => {
+    const url = '/api/game/timer/stop';
+    const options = {
+        method: 'POST',
+    };
+
+    try {
+        const response = await fetch(url, options);
+
+        if (response.ok) {
+            stopTimer();
+        } else {
+            console.log(`${response.status}`);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+resumeTimerButtonElement.addEventListener('click', async () => {
+    const url = '/api/game/timer/resume';
+    const options = {
+        method: 'POST',
+    };
+
+    try {
+        const response = await fetch(url, options);
+
+        if (response.ok) {
+            await refreshLivePage();
+        } else {
+            console.log(`${response.status}`);
+        }
+    } catch (error) {
+        console.log(error);
     }
 });
 
@@ -175,6 +220,17 @@ async function refreshLivePage() {
     const currentPot = liveStats.totalPot;
     const currentSmallBlind = liveStats.currentSmallBlind;
     const currentBigBlind = liveStats.currentBigBlind;
+    const secondsUntilNextBlind = liveStats.secondsUntilNextBlind;
+    const paused = liveStats.paused;
+
+    setDeadline(secondsUntilNextBlind);
+
+    if (paused) {
+        showValue(timerElement, formatTime(secondsUntilNextBlind));
+        stopTimer();
+    } else {
+        startTimer();
+    }
 
     showActivePlayers(activePlayers, buyInCounts);
     showEliminatedPlayers(eliminatedPlayers, buyInCounts);
@@ -182,6 +238,47 @@ async function refreshLivePage() {
     showValue(currentSmallBlindElement, currentSmallBlind);
     showValue(currentBigBlindElement, currentBigBlind);
 }
+
+const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    const remainingSecondsStr = `${remainingSeconds}`;
+
+    return `${minutes}:${remainingSecondsStr.padStart(2, '0')}`;
+};
+
+const setDeadline = (secondsLeft) => {
+    deadline = Date.now() + secondsLeft * 1000;
+};
+
+const getSecondsRemaining = (targetTime) => {
+    return Math.ceil((targetTime - Date.now()) / 1000);
+};
+
+async function tick() {
+    const timeLeft = getSecondsRemaining(deadline);
+
+    if (!isRefreshing) {
+        if (timeLeft > 0) {
+            showValue(timerElement, formatTime(timeLeft));
+        } else {
+            isRefreshing = true;
+            await refreshLivePage();
+            isRefreshing = false;
+        }
+    }
+}
+
+const startTimer = () => {
+    if (id === null) {
+        id = setInterval(tick, 250);
+    }
+};
+
+const stopTimer = () => {
+    clearInterval(id);
+    id = null;
+};
 
 document.addEventListener('DOMContentLoaded', async () => {
     await loadRuleset();
